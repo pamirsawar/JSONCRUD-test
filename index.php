@@ -40,6 +40,7 @@
                     <td>Location</td>
                     <td>Joining Date</td>
                     <td>Roles</td>
+                    <td>Action</td>
                 </tr>
             </thead>
             <tbody>
@@ -48,7 +49,13 @@
                 foreach ($files as $file) {
                     $user = file_get_contents('./jsons/' . $file);
                     $data = json_decode($user, true); // decode the JSON into an associative array
+                    $number= count($data);
 
+                    echo "<pre>";
+                    print_r($data);
+                    echo "</pre>";
+
+                    $i=0;
                 ?>
                     <tr>
 
@@ -59,18 +66,39 @@
                         <td><?= $data['joining_date']  ?></td>
                         <td><?php 
                         
-                        echo "<select>";
-                       foreach($data['roles'] as $roles)
-                       {
-                         echo "<option value='$roles'>$roles</option>";   
-                       }
+                        // print_r($data['roles']);
+
+                        echo "<select multiple>";
+
+                    //    {
+?>
+                         <option value='<?=$roles ?>' <?php if($data['roles'][$i]=='admin') echo "selected" ?> >admin</option>   
+                         <option value='<?=$roles ?>' <?php if($data['roles'][$i+1]=='sales') echo "selected" ?> >sales</option>  
+                         <option value='<?=$roles ?>' <?php if($data['roles'][$i+2]=='reporting') echo "selected" ?> >reporting</option>   
+                         <option value='<?=$roles ?>' <?php if($data['roles'][$i+3]=='development') echo "selected" ?> >development</option>  
+
+                         <?php 
+                    //    }
                         echo "</select>";
 
                         ?></td>
 
+                        <td>
+                            <select>
+                                <option value="">Edit</option>
+                                <option value="">Delete</option>
+                            </select>
+                        </td>
+
                     </tr>
 
                 <?php
+
+$i=0;
+                        // if($i<$number){
+                        //     $i++;
+                        // }
+
                 }
                 ?>
             </tbody>
