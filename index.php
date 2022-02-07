@@ -14,15 +14,27 @@
 
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.4/css/jquery.dataTables.css">
 
+
+    <!-- bootstrap select  -->
+
+    <script data-require="jquery@2.2.4" data-semver="2.2.4" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <link data-require="bootstrap@3.3.7" data-semver="3.3.7" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+    <script data-require="bootstrap@3.3.7" data-semver="3.3.7" src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/js/bootstrap-select.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.1/css/bootstrap-select.min.css" />
+
+
 </head>
 
 <body>
 
 
     <?php
+
     $path    = './jsons';
     $files = scandir($path);
-
     $files = array_diff(scandir($path), array('.', '..'));
 
     ?>
@@ -30,7 +42,26 @@
 
     <div class="container mt-5">
 
-        <table id="myTable">
+<?php 
+    if((isset($_REQUEST['action']) && $_REQUEST['action']=='edit'))
+    {
+        include_once "./edit.php";
+    }
+    ?>
+
+
+
+<?php 
+    if(!isset($_REQUEST['action']))
+    {
+
+        ?>
+
+<h1>ALL USERS</h1>
+
+
+
+        <table id="myTable" class="mt-3">
 
             <thead>
                 <tr>
@@ -49,13 +80,14 @@
                 foreach ($files as $file) {
                     $user = file_get_contents('./jsons/' . $file);
                     $data = json_decode($user, true); // decode the JSON into an associative array
-                    $number= count($data);
+                    $number = count($data);
 
-                    echo "<pre>";
-                    print_r($data);
-                    echo "</pre>";
+                    $id = str_replace('.json', '', $file);
 
-                    $i=0;
+                    // echo "<pre>";
+                    // print_r($data);
+                    // echo "</pre>";
+
                 ?>
                     <tr>
 
@@ -64,29 +96,23 @@
                         <td><?= $data['age']  ?></td>
                         <td><?= $data['location']  ?></td>
                         <td><?= $data['joining_date']  ?></td>
-                        <td><?php 
-                        
-                        // print_r($data['roles']);
-
-                        echo "<select multiple>";
-
-                    //    {
-?>
-                         <option value='<?=$roles ?>' <?php if($data['roles'][$i]=='admin') echo "selected" ?> >admin</option>   
-                         <option value='<?=$roles ?>' <?php if($data['roles'][$i+1]=='sales') echo "selected" ?> >sales</option>  
-                         <option value='<?=$roles ?>' <?php if($data['roles'][$i+2]=='reporting') echo "selected" ?> >reporting</option>   
-                         <option value='<?=$roles ?>' <?php if($data['roles'][$i+3]=='development') echo "selected" ?> >development</option>  
-
-                         <?php 
-                    //    }
-                        echo "</select>";
-
-                        ?></td>
 
                         <td>
-                            <select>
-                                <option value="">Edit</option>
-                                <option value="">Delete</option>
+                            <select class="selectpicker" multiple name="" id="" title="Roles">
+
+                                <?php
+                                foreach ($data['roles'] as $role) {
+
+                                    echo  " <option selected  disabled> $role </option>";
+                                }
+                                ?>
+                            </select>
+                        </td>
+
+                        <td>
+                            <select data-id="<?= $id ?>"  class="selectpicker action" title="Choose Action">
+                                <option value="edit">Edit</option>
+                                <option value="delete">Delete</option>
                             </select>
                         </td>
 
@@ -94,17 +120,15 @@
 
                 <?php
 
-$i=0;
-                        // if($i<$number){
-                        //     $i++;
-                        // }
-
                 }
+
                 ?>
             </tbody>
-
         </table>
 
+<?php
+}
+?>
     </div>
 
     <!-- bootstrap 5 js bundle -->
@@ -119,11 +143,9 @@ $i=0;
     <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.4/js/jquery.dataTables.js"></script>
 
 
-    <script>
-        $(document).ready(function() {
-            $('#myTable').DataTable();
-        });
-    </script>
+
+
+    <script type="text/javascript" src="./assets/js/script.js"> </script>
 
 </body>
 
