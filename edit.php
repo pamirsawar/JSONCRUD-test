@@ -79,7 +79,7 @@ $rolestring = implode(',', $data['roles']);
             </div>
 
             <input type="hidden" name="id" value="<?= $_REQUEST['id'] ?>">
-            <input type="hidden" name="roles" id="roles">
+            <input type="hidden" name="roles" id="roles" value="<?= $rolestring  ?>">
             <input type="submit" name="edit" class="btn btn-primary btn-md pull-right" value="Update">
 
         </form>

@@ -1,10 +1,1 @@
-{
-    "name": "Danis Lancer",
-    "designation": "Sales Executive",
-    "age": 29,
-    "location": "EU",
-    "joining_date": "2019-06-13",
-    "roles": [
-        "sales"
-    ]
-}
+{"name":"Danis Lancer","designation":"Sales Executive","age":"29","location":"EU","joining_date":"2019-06-13","roles":["admin","sales"]}

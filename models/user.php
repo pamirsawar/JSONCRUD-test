@@ -2,30 +2,26 @@
 
 class User
 {
-
-    public $name;
-    public $designation;
-    public $age;
-    public $location;
-    public $joining_date;
-    public $roles;
-
+ 
     function getUsers()
     {
-        $path = __DIR__ . '/../jsons';
-        $files = scandir($path);
-        $files = array_diff(scandir($path), array('.', '..'));
+        // $path = __DIR__ . '/../jsons';
+        // $files = scandir($path);
+        // $files = array_diff(scandir($path), array('.', '..'));
+        // foreach ($files as $file) {
 
-        $user = file_get_contents('./jsons/' . $files);
-        $data = json_decode($user, true); // decode the JSON into an associative array
-        $number = count($data);
-        return $data;
+        // $user = file_get_contents('./jsons/' . $files);
+        // $data = json_decode($user, true); // decode the JSON into an associative array
+        // $number = count($data);
+        // }
+        // return $data;
     }
 
-    function getUser($id){
+    function getUser($id)
+    {
         $path = __DIR__ . '/../jsons';
 
-        $file="./jsons/".$id.".json";
+        $file = "./jsons/" . $id . ".json";
 
         $user = file_get_contents($file);
         $data = json_decode($user, true); // decode the JSON into an associative array
@@ -33,19 +29,40 @@ class User
         return $data;
     }
 
-    function createUser($data){
+    function createUser($data)
+    {
 
-        $jsontext= json_encode($data);
- 
-        $id="test";
+        $jsontext = json_encode($data);
 
-         file_put_contents(__DIR__ . "/../jsons/".$id.".json", $jsontext);
-     }
+        // $usersdata = $this->getUsers();
+        // $count = count($usersdata);
 
-    function updateUser($id,$data){
 
-       $jsontext= json_encode($data);
+        $path = __DIR__ . '/../jsons';
+        $files = scandir($path);
+        $files = array_diff(scandir($path), array('.', '..'));
 
-        file_put_contents(__DIR__ . "/../jsons/".$id.".json", $jsontext);
+        $count= count($files);
+
+        // echo "<pre>";
+        // print_r($files);
+        // echo "</pre>";
+
+        
+        $id = $count+1;
+        echo "new id".$id;
+
+        if (file_put_contents(__DIR__ . "/../jsons/" . $id . ".json", $jsontext)) {
+            echo "success";
+        } else {
+            echo "something went wrong";
+        }
+    }
+
+    function updateUser($id, $data)
+    {
+        $jsontext = json_encode($data);
+
+        file_put_contents(__DIR__ . "/../jsons/" . $id . ".json", $jsontext);
     }
 }
