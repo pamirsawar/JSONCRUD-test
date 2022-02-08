@@ -16,8 +16,10 @@ if (isset($_POST['create'])) {
 
     $userdata['roles'] = $roles;
 
-
     $user->createUser($userdata);
+    header("location: ./index.php");
+
+    exit();
 }
 
 
