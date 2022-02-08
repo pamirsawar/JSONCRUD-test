@@ -18,6 +18,7 @@ if (isset($_POST['create'])) {
 
 
     $user->createUser($userdata);
+    exit();
 }
 
 

@@ -43,14 +43,8 @@ class User
         $files = array_diff(scandir($path), array('.', '..'));
 
         $count= count($files);
-
-        // echo "<pre>";
-        // print_r($files);
-        // echo "</pre>";
-
         
         $id = $count+1;
-        echo "new id".$id;
 
         if (file_put_contents(__DIR__ . "/../jsons/" . $id . ".json", $jsontext)) {
             echo "success";
